@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Общество почвоведов Кыргызстана</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Хедер */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* Верхняя часть хедера - белая */
+        .header-top {
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Нижняя часть хедера - зеленая */
+        .header-bottom {
+            background-color: #083001;
+            padding: 15px 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100px;
+            height: 45px;
+            margin-right: 10px;
+        }
+
+        .site-name {
+            font-size: 18px;
+            font-weight: normal;
+            color: #000000;
+        }
+
+        .header-top-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-container {
+            position: relative;
+            margin-right: 20px;
+        }
+
+        .search-container input {
+            padding: 8px 15px 8px 35px;
+            border: 1px solid #ddd;
+            border-radius: 13px;
+            outline: none;
+            width: 200px;
+            transition: all 0.3s;
+        }
+
+        .search-container input:focus {
+            border-color: #083001;
+        }
+
+        .search-icon {
+            height: 14px;
+            width: 14px;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .language-switcher {
+            position: relative;
+            margin-right: 15px;
+        }
+
+        .language-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .language-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .language-flag {
+            width: 20px;
+            height: 15px;
+            margin-right: 5px;
+            background-size: cover;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 100;
+        }
+
+        .language-dropdown.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .language-option:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Основное меню */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 80px;
+        }
+
+        .nav-links li {
+            margin: 0 5px;
+            position: relative;
+        }
+
+        .nav-links > li > a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            padding: 5px 8px;
+            position: relative;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-links > li > a:hover {
+            color: #f0f0f0;
+        }
+
+        .nav-links > li > a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: width 0.3s;
+        }
+
+        .nav-links > li > a:hover::after {
+            width: 100%;
+        }
+
+        /* Выпадающее меню для "О нас" */
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #083001;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: none;
+            min-width: 200px;
+            z-index: 100;
+        }
+
+        .nav-links li:hover .submenu {
+            display: block;
+        }
+
+        .submenu a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .submenu a:hover {
+            background-color: #0a3a03;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px 10px;
+            color: #333;
+        }
+
+        .desktop-language {
+            display: block;
+        }
+
+        .mobile-language {
+            display: none;
+        }
+
+        /* Мобильное меню */
+        .mobile-menu {
+            display: none;
+            background-color: #083001;
+            padding: 20px;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 100%;
+            z-index: 999;
+        }
+
+        .mobile-menu.show {
+            display: block;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+        }
+
+        .mobile-nav-links li {
+            margin: 15px 0;
+        }
+
+        .mobile-nav-links > li > a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            display: block;
+            padding: 8px 0;
+        }
+
+        /* Подменю в мобильной версии */
+        .mobile-submenu {
+            display: none;
+            list-style: none;
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+
+        .mobile-submenu.show {
+            display: block;
+        }
+
+        .mobile-submenu a {
+            color: #ffffff;
+            font-size: 14px;
+            padding: 5px 0;
+            display: block;
+        }
+
+        .mobile-submenu-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            color: #ffffff;
+            border-bottom: 2px solid rgb(255, 255, 255);
+        }
+
+        .mobile-submenu-toggle::after {
+            content: '+';
+            font-size: 18px;
+            color: #ffffff;
+        }
+
+        .mobile-submenu-toggle.active::after {
+            content: '-';
+        }
+
+        /* Секция с фоновым изображением */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./fon1.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            padding: 40px 20px;
+            color: white;
+            text-align: left; /* Добавлено для выравнивания по левому краю */
+            margin-right: auto; /* Чтобы контент не растягивался на всю ширину */
+        }
+
+        /* Секция с белым фоном (второй заголовок) */
+        .white-section {
+            width: 100%;
+            padding: 80px 20px;
+            background-color: white;
+        }
+        
+        .white-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .main-title {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+            text-align: left; /* Явное указание выравнивания по левому краю */
+        }
+        
+
+        .org-description {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 0 40px 0; /* Изменено с auto на 0 для левого края */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            line-height: 1.6;
+            text-align: left; /* Явное указание выравнивания по левому краю */
+        }
+
+        .section-title {
+            font-size: 48px;
+            color: #083001;
+            margin-bottom: 30px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .section-text-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .section-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 32px;
+                margin-bottom: 20px;
+            }
+            
+            .section-text {
+                font-size: 16px;
+            }
+            
+            .white-section {
+                padding: 60px 20px;
+            }
+        }
+
+        /* Адаптивные стили для заголовков и текста */
+        @media (max-width: 1200px) {
+            .main-title {
+                font-size: 56px;
+            }
+            .section-title {
+                font-size: 42px;
+            }
+            .org-description, .section-text {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-title {
+                font-size: 48px;
+            }
+            .section-title {
+                font-size: 36px;
+            }
+            .org-description, .section-text {
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 36px;
+            }
+            .section-title {
+                font-size: 32px;
+                margin-bottom: 20px;
+            }
+            .org-description, .section-text {
+                font-size: 16px;
+            }
+            .white-section {
+                padding: 60px 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-title {
+                font-size: 28px;
+            }
+            .section-title {
+                font-size: 28px;
+            }
+            .org-description, .section-text {
+                font-size: 15px;
+            }
+            .white-section {
+                padding: 40px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 24px;
+            }
+            .section-title {
+                font-size: 24px;
+            }
+            .org-description, .section-text {
+                font-size: 14px;
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #083001;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #083001;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: white;
+        }
+
+        /* Адаптивные стили */
+        @media (max-width: 1200px) {
+            .main-title {
+                font-size: 56px;
+            }
+            .org-description {
+                font-size: 18px;
+            }
+            
+            .nav-links {
+                gap: 8px;
+            }
+            
+            .nav-links a {
+                padding: 5px 6px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-title {
+                font-size: 48px;
+                margin-bottom: 25px;
+            }
+            .org-description {
+                font-size: 17px;
+                margin-bottom: 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .desktop-language {
+                display: none;
+            }
+
+            .mobile-language {
+                display: block;
+            }
+
+            .header-top {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 36px;
+                margin-bottom: 20px;
+            }
+            .org-description {
+                font-size: 16px;
+                margin-bottom: 25px;
+            }
+            .btn {
+                padding: 10px 25px;
+            }
+            
+            .logo {
+                width: 70px;
+                height: 32px;
+            }
+        
+            .site-name {
+                font-size: 14px;
+            }
+            
+            .search-container input {
+                width: 150px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-title {
+                font-size: 28px;
+            }
+            .org-description {
+                font-size: 15px;
+            }
+            .hero-content {
+                padding: 20px;
+            }
+            
+            .logo-container {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+
+            .header-top {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .header-top-right {
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .search-container {
+                margin-right: 0;
+                flex-grow: 1;
+            }
+
+            .search-container input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 24px;
+            }
+            .org-description {
+                font-size: 14px;
+            }
+            
+            .logo {
+                width: 50px;
+                height: 25px;
+            }
+        
+            .site-name {
+                font-size: 12px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .main-title {
+                font-size: 24px;
+            }
+            .org-description {
+                font-size: 14px;
+            }
+        }
+
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        @media (max-width: 768px) {
+            .hero-buttons {
+                flex-direction: column;
+                align-items: flex-start; /* Изменено с center на flex-start */
+                gap: 15px;
+            }
+            
+            .btn {
+                width: auto; /* Изменено с 100% на auto */
+                max-width: 250px;
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: transparent;
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #ffffff;
+            text-align: center;
+            min-width: 160px;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: #083001;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: white;
+        }
+
+        /* Адаптивные стили для кнопок */
+        @media (max-width: 768px) {
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+
+
+
+        /* Новые стили для дополнительной секции */
+        .content-section {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-title {
+            font-size: 36px;
+            color: #083001;
+            margin-bottom: 20px;
+            text-align: left;
+            font-weight: 700;
+            line-height: 1.2; /* Изменено на относительное значение */
+        }
+
+        .content-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+            text-align: left;
+            max-width: 800px;
+        }
+
+        @media (max-width: 1200px) {
+    .main-title {
+        font-size: 56px;
+        line-height: 1.2;
+    }
+    .section-title {
+        font-size: 42px;
+        line-height: 1.2;
+    }
+    .content-title {
+        font-size: 32px;
+        line-height: 1.2;
+    }
+}
+
+@media (max-width: 992px) {
+    .main-title {
+        font-size: 48px;
+        line-height: 1.2;
+    }
+    .section-title {
+        font-size: 36px;
+        line-height: 1.2;
+    }
+    .content-title {
+        font-size: 28px;
+        line-height: 1.2;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 36px;
+        line-height: 1.2;
+    }
+    .section-title {
+        font-size: 32px;
+        line-height: 1.2;
+    }
+    .content-title {
+        font-size: 24px;
+        line-height: 1.2;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-title {
+        font-size: 28px;
+        line-height: 1.2;
+    }
+    .section-title {
+        font-size: 28px;
+        line-height: 1.2;
+    }
+    .content-title {
+        font-size: 22px;
+        line-height: 1.2;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 24px;
+        line-height: 1.2;
+    }
+    .section-title {
+        font-size: 24px;
+        line-height: 1.2;
+    }
+    .content-title {
+        font-size: 20px;
+        line-height: 1.2;
+    }
+}
+
+        /* Адаптивные стили для дополнительной секции */
+        @media (max-width: 992px) {
+            .content-title {
+                font-size: 32px;
+            }
+            .content-text {
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-title {
+                font-size: 28px;
+                margin-bottom: 15px;
+            }
+            .content-text {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content-section {
+                margin: 30px auto;
+            }
+            .content-title {
+                font-size: 24px;
+            }
+            .content-text {
+                font-size: 15px;
+            }
+        }
+
+        /* Стили для кнопки во второй секции */
+.section-button-container {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.section-btn {
+    display: inline-block;
+    padding: 14px 32px;
+    background-color: #083001;
+    color: white;
+    text-decoration: none;
+    border-radius: 15px;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    border: 2px solid #083001;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(8, 48, 1, 0.2);
+}
+
+.section-btn:hover {
+    background-color: transparent;
+    color: #083001;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(8, 48, 1, 0.3);
+}
+
+.section-btn:active {
+    transform: translateY(1px);
+}
+
+
+.section-btn {
+    animation: pulse 2s infinite;
+}
+
+.section-btn:hover {
+    animation: none;
+}
+
+/* Адаптивные стили для кнопки */
+@media (max-width: 768px) {
+    .section-btn {
+        padding: 12px 28px;
+        font-size: 15px;
+    }
+    
+    .section-button-container {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-btn {
+        padding: 10px 24px;
+        font-size: 14px;
+        display: block;
+        margin: 0 auto;
+        max-width: 200px;
+    }
+    
+    .section-button-container {
+        margin-top: 25px;
+    }
+}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <!-- Верхняя часть - белая -->
+        <div class="header-top">
+            <div class="logo-container">
+                <img src="./logo_clear.jpg" alt="Logo" class="logo">
+                <div class="site-name" data-lang-key="siteName">Общество почвоведов Кыргызстана им. академика А.М. Мамытова</div>
+            </div>
+
+            <div class="header-top-right">
+                <div class="search-container">
+                    <img src="./search.png" alt="Поиск" class="search-icon">
+                    <input type="text" placeholder="Поиск..." data-lang-key="searchPlaceholder">
+                </div>
+
+                <div class="language-switcher desktop-language">
+                    <button class="language-btn">
+                        <div class="language-flag" style="background-image: url('https://flagcdn.com/w20/ru.png');"></div>
+                        <span>Рус</span>
+                    </button>
+                    <div class="language-dropdown">
+                        <div class="language-option" data-lang="ru">
+                            <div class="language-flag" style="background-image: url('https://flagcdn.com/w20/ru.png');"></div>
+                            <span>Русский</span>
+                        </div>
+                        <div class="language-option" data-lang="en">
+                            <div class="language-flag" style="background-image: url('https://flagcdn.com/w20/gb.png');"></div>
+                            <span>English</span>
+                        </div>
+                        <div class="language-option" data-lang="kg">
+                            <div class="language-flag" style="background-image: url('https://flagcdn.com/w20/kg.png');"></div>
+                            <span>Кыргызча</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mobile-controls">
+                    <div class="language-switcher mobile-language">
+                        <button class="language-btn">
+                            <div class="language-flag" style="background-image: url('https://flagcdn.com/w20/ru.png');"></div>
+                            <span>Рус</span>
+                        </button>
+                        <div class="language-dropdown">
+                            <div class="language-option" data-lang="ru">
+                                <div class="language-flag" style="background-image: url('https://flagcdn.com/w20/ru.png');"></div>
+                                <span>Русский</span>
+                            </div>
+                            <div class="language-option" data-lang="en">
+                                <div class="language-flag" style="background-image: url('https://flagcdn.com/w20/gb.png');"></div>
+                                <span>English</span>
+                            </div>
+                            <div class="language-option" data-lang="kg">
+                                <div class="language-flag" style="background-image: url('https://flagcdn.com/w20/kg.png');"></div>
+                                <span>Кыргызча</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="mobile-menu-btn">☰</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Нижняя часть - зеленая -->
+        <div class="header-bottom">
+            <ul class="nav-links">
+                <li><a href="#" data-lang-key="home">Главная</a></li>
+                <li>
+                    <a href="#" data-lang-key="about">О нас</a>
+                    <ul class="submenu">
+                        <li><a href="#">Об обществе</a></li>
+                        <li><a href="#">Правление</a></li>
+                        <li><a href="#">Что мы делаем</a></li>
+                        <li><a href="#">Стать членом ОПК</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" data-lang-key="goals">Цели и задачи ОПК</a></li>
+                <li><a href="#" data-lang-key="events">События</a></li>
+                <li><a href="#" data-lang-key="cooperation">Сотрудничество</a></li>
+                <li><a href="#" data-lang-key="education">Обучение</a></li>
+                <li><a href="#" data-lang-key="projects">Проекты</a></li>
+                <li><a href="#" data-lang-key="contacts">Контакты</a></li>
+            </ul>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div class="mobile-menu">
+            <ul class="mobile-nav-links">
+                <li><a href="#" data-lang-key="home">Главная</a></li>
+                <li>
+                    <div class="mobile-submenu-toggle">О нас</div>
+                    <ul class="mobile-submenu">
+                        <li><a href="#">Об обществе</a></li>
+                        <li><a href="#">Правление</a></li>
+                        <li><a href="#">Что мы делаем</a></li>
+                        <li><a href="#">Стать членом ОПК</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" data-lang-key="goals">Цели и задачи ОПК</a></li>
+                <li><a href="#" data-lang-key="events">События</a></li>
+                <li><a href="#" data-lang-key="cooperation">Сотрудничество</a></li>
+                <li><a href="#" data-lang-key="education">Обучение</a></li>
+                <li><a href="#" data-lang-key="projects">Проекты</a></li>
+                <li><a href="#" data-lang-key="contacts">Контакты</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Секция с фоновым изображением -->
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <h1 class="main-title">Здоровая почва для здоровой жизни!</h1>
+            
+            <p class="org-description">
+                Общество обьединяет в своих рядах специалистов в области почвоведения и смежных дисциплинах, работающих в академических и отрастлевых научно-исследовательских институтах, в высшей школе и производственных организациях.
+            </p>
+            
+            <div class="hero-buttons">
+                <a href="#" class="btn">Узнать больше</a>
+                <a href="#" class="btn btn-outline">Стать членом ОПК</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Вторая секция с белым фоном -->
+    <section class="white-section">
+        <div class="white-content">
+            <h2 class="section-title">Добро пожаловать на сайт Общества почвоведов Кыргызстана им. академика А.М.Мамытова</h2>
+            <div class="section-text-container">
+                <p class="section-text">
+                    Общество почвоведов Кыргызстана (ОПК) объединяет исследователей, ученых и практиков, занимающихся изучением почв и их ключевой роли в экосистемах страны. Мы развиваем науку о почвах, поддерживаем профессиональное сотрудничество и популяризируем знания о их значении для общества.
+                    ОПК сотрудничает с учёными и организациями в Кыргызстане и за рубежом для решения задач устойчивого управления почвами. 
+                    Присоединяйтесь к нам, чтобы вместе создавать будущее, где забота о почвах – наш общий приоритет!
+                </p>
+            </div>
+            <!-- Добавленная кнопка -->
+            <div class="section-button-container">
+                <a href="#" class="section-btn">Узнать больше</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Функция для адаптации под высоту хедера
+        function adjustForHeader() {
+            const header = document.querySelector('.header');
+            const heroSection = document.querySelector('.hero-section');
+            
+            if (header && heroSection) {
+                const headerHeight = header.offsetHeight;
+                heroSection.style.paddingTop = `${headerHeight}px`;
+            }
+        }
+
+        // Вызываем при загрузке и изменении размера
+        window.addEventListener('load', adjustForHeader);
+        window.addEventListener('resize', adjustForHeader);
+
+        // Тексты для разных языков
+        const translations = {
+            ru: {
+                siteName: "Общество почвоведов Кыргызстана им. академика А.М. Мамытова",
+                searchPlaceholder: "Поиск...",
+                home: "Главная",
+                about: "О нас",
+                goals: "Цели и задачи ОПК",
+                events: "События",
+                cooperation: "Сотрудничество",
+                education: "Обучение",
+                projects: "Проекты",
+                contacts: "Контакты"
+            },
+            en: {
+                siteName: "Kyrgyzstan Soil Scientists Society named after Academician A.M. Mamatov",
+                searchPlaceholder: "Search...",
+                home: "Home",
+                about: "About Us",
+                goals: "Goals and Objectives",
+                events: "Events",
+                cooperation: "Cooperation",
+                education: "Education",
+                projects: "Projects",
+                contacts: "Contacts"
+            },
+            kg: {
+                siteName: "Академик А.М. Мамытов атындагы Кыргызстандын топурак таануучулар коому",
+                searchPlaceholder: "Издөө...",
+                home: "Башкы бет",
+                about: "Биз жөнүндө",
+                goals: "OPKнын максаттары жана милдеттери",
+                events: "Окуялар",
+                cooperation: "Кызматташуу",
+                education: "Окутуу",
+                projects: "Долбоорлор",
+                contacts: "Байланыштар"
+            }
+        };
+
+        // Текущий язык
+        let currentLanguage = 'ru';
+
+        // Мобильное меню
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('show');
+        });
+
+        // Подменю в мобильной версии
+        const submenuToggles = document.querySelectorAll('.mobile-submenu-toggle');
+        submenuToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const submenu = this.nextElementSibling;
+                submenu.classList.toggle('show');
+            });
+        });
+
+        // Переключение языка (для обеих кнопок)
+        const languageBtns = document.querySelectorAll('.language-btn');
+        const languageDropdowns = document.querySelectorAll('.language-dropdown');
+        const languageOptions = document.querySelectorAll('.language-option');
+
+        languageBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const dropdown = btn.closest('.language-switcher').querySelector('.language-dropdown');
+                dropdown.classList.toggle('show');
+            });
+        });
+
+        languageOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const lang = option.getAttribute('data-lang');
+                currentLanguage = lang;
+                changeLanguage(lang);
+                
+                // Закрываем все dropdown
+                languageDropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                });
+                
+                // Обновляем все кнопки языка
+                const flag = option.querySelector('.language-flag').style.backgroundImage;
+                const text = option.querySelector('span').textContent.substring(0, 3);
+                
+                languageBtns.forEach(btn => {
+                    btn.querySelector('.language-flag').style.backgroundImage = flag;
+                    btn.querySelector('span').textContent = text;
+                });
+            });
+        });
+
+        // Функция смены языка
+        function changeLanguage(lang) {
+            // Получаем все элементы с атрибутом data-lang-key
+            const elements = document.querySelectorAll('[data-lang-key]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.tagName === 'INPUT') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        // Закрытие выпадающего меню при клике вне его
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.language-switcher')) {
+                languageDropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                });
+            }
+            
+            // Закрытие мобильного меню при клике вне его
+            if (!e.target.closest('.mobile-menu') && !e.target.closest('.mobile-menu-btn')) {
+                mobileMenu.classList.remove('show');
+            }
+        });
+
+        // Поиск по сайту (заглушка)
+        const searchInput = document.querySelector('.search-container input');
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                alert(`${translations[currentLanguage]['searchPlaceholder']}: ${searchInput.value}`);
+            }
+        });
+    </script>
+</body>
+</html>
